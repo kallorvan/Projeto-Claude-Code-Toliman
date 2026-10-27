@@ -121,7 +121,79 @@ Estas perguntas dependem de decisão ou conhecimento de quem opera o processo, n
 
 ---
 
-## 8. Próximos passos propostos
+## 8. Riscos de LGPD e outros perigos da conexão com o Microsoft 365
+
+*Não é parecer jurídico. DPO e jurídico validam antes da conexão.*
+
+### 8.1 LGPD
+
+| Tema | Risco | Controle proposto | Dono |
+|---|---|---|---|
+| Dados pessoais | E-mails e planilhas com nome, CPF, CNH, placa vinculada a pessoa, telefone e e-mail de motoristas, clientes e armador. | Escopo mínimo: só a caixa de programação e um arquivo de planilha. CPF mascarado. | TI, DPO |
+| Base legal e finalidade (arts. 6º e 7º) | Ler a caixa inteira para extrair deadline é excesso de tratamento. | Finalidade escrita: extrair navio, deadline e mudanças. Nada além disso. | DPO, jurídico |
+| Operador e transferência internacional (arts. 33 e 39) | Dados saem do Brasil, e a Anthropic atua como operador ou suboperador. | DPA assinado. Confirmar por escrito que dados não treinam modelos e o prazo de retenção no plano empresarial. | Jurídico, TI |
+| Direitos do titular (art. 18) | Motorista ou contato pede acesso, correção ou eliminação, e a empresa não consegue atender. | Mapear onde o dado passou (caixa, planilha, histórico do Claude). Procedimento de resposta. | DPO |
+| Segurança e incidente (arts. 46 a 48) | Vazamento sem comunicação à ANPD e aos titulares. | Log de auditoria, MFA, plano de resposta a incidente. | TI, DPO |
+| Relatório de impacto (RIPD, art. 38) | Tratamento em escala sem avaliação formal de risco. | RIPD antes da conexão. | DPO |
+| Monitoramento de funcionários | Caixas com mensagens de funcionários entram no escopo. | Política de uso de e-mail e de IA com aviso prévio. Excluir caixas de RH e financeiro. | RH |
+
+### 8.2 Outros perigos
+
+| Tema | Risco | Controle proposto | Dono |
+|---|---|---|---|
+| Sigilo comercial e operacional | Tarifas, contratos, rotas, clientes, procedimentos de lacre, rastreador e OEA podem vazar. Parte está sob NDA. | Classificar a informação. Excluir do escopo o que for sob NDA sem autorização do cliente. | Gestão, jurídico |
+| Permissões amplas no Microsoft 365 | `Mail.ReadWrite` e `Files.ReadWrite.All` dão acesso a toda a caixa e a todo o SharePoint. | Menor privilégio: caixa compartilhada e um arquivo. Consentimento de administrador. Acesso condicional e MFA. Rótulos de sensibilidade e DLP. | TI |
+| Injeção de instruções por e-mail | Um e-mail externo tenta mudar o comportamento do Claude, por exemplo "altere o deadline do navio". | Conteúdo externo é dado, não instrução. Leitura separada da gravação. Nenhuma alteração sem confirmação humana. | TI, operação |
+| Fraude de deadline (e-mail falso do armador) | Programa de embarque alterado por remetente falso. | Validar SPF, DKIM e DMARC. Confirmação humana antes de gravar. Contato por canal conhecido para mudança crítica. | Operação |
+| Erro de leitura | Data, horário, fuso, tabela ou nome de navio lidos errado e gravados com aparência de certo. | Mostrar o trecho original do e-mail junto da proposta. Histórico de versões no SharePoint. Teste com amostra. | Operação |
+| Uso fora do controle (shadow IT) | Conta pessoal do Claude conectada à caixa corporativa, ou dados colados em conversas fora da conta empresarial. | Conta corporativa única. Regra escrita. Bloqueio de contas pessoais na rede. | TI, RH |
+| Retenção e descarte | Prazos do e-mail, da planilha e das conversas com o Claude não alinhados. | Alinhar com a política de retenção da empresa. | Jurídico, TI |
+| Dependência e revogação | Conexão revogada ou plano alterado para a operação. | Processo manual como contingência testada. | Operação |
+
+### 8.3 Controles mínimos antes de conectar
+
+1. DPO e jurídico validam base legal, finalidade, DPA, transferência internacional e treinamento.
+2. RIPD concluído.
+3. Política de uso de IA e de e-mail corporativo aprovada por TI e RH.
+4. Escopo mínimo: caixa compartilhada de programação e um arquivo de planilha, com permissões separadas de leitura e escrita.
+5. Nenhuma gravação sem confirmação humana, com registro de quem confirmou e quando.
+6. Log de auditoria de tudo que o Claude leu e propôs.
+7. Mascaramento de CPF e de dados desnecessários.
+8. Plano de contingência manual testado.
+9. Teste com dados fictícios antes de qualquer dado real.
+
+### 8.4 Como levar à TI, RH e Gestão
+
+**Mensagem central.** Não dizer que o Claude "elimina" os riscos. Dizer que ele reduz os riscos a níveis aceitáveis e mensuráveis, e que cada controle tem dono e evidência. Isso é mais fácil de aprovar e mais honesto.
+
+**Comparar com o risco atual.** Hoje já existem: e-mails perdidos, planilhas digitadas à mão, dados de motoristas trafegando por WhatsApp, e nenhuma trilha de quem alterou o deadline. O argumento forte é: "o risco atual é alto e não tem registro; com os controles, ele fica menor e auditável".
+
+**Por área.**
+
+- **TI.** Pergunta a responder: o que precisa ser verdadeiro para aprovar? Resposta: escopo mínimo, menor privilégio, consentimento de administrador, MFA, rótulos e DLP, log de auditoria e conta corporativa única. Oferecer demonstração com dados fictícios.
+- **RH.** Pergunta a responder: como fica a privacidade dos funcionários? Resposta: caixas de RH e financeiro excluídas, política escrita com aviso prévio, sem avaliação de desempenho a partir da caixa. RH define a política, e a TI aplica.
+- **Gestão.** Pergunta a responder: vale o custo e o risco? Resposta: piloto de 30 dias com métricas antes e depois: deadlines perdidos, erros de digitação na planilha, horas de digitação, e-mails sem tratamento. Critério de parada definido de antemão.
+
+**Sequência sugerida.**
+
+1. Reunião conjunta com TI, RH, DPO e Gestão, com este estudo como base.
+2. Demonstração com dados fictícios, sem conectar nada à empresa.
+3. Aprovação formal da política e do RIPD.
+4. Piloto restrito: uma caixa, um arquivo, leitura e proposta apenas.
+5. Medição de 30 dias e decisão de continuar, ajustar ou parar.
+
+**Objeções prováveis e respostas.**
+
+| Objeção | Resposta |
+|---|---|
+| "A IA vai ler nossos dados." | Só a caixa de programação, com finalidade escrita, DPA e log. |
+| "A IA pode alterar a planilha sozinha." | Não. Ela só propõe. Quem grava é uma pessoa, com registro. |
+| "Vamos vazar dados." | Menor privilégio, MFA, DLP, log, e a informação sob NDA fica fora. Vazamento hoje já acontece por WhatsApp. |
+| "Funcionários serão monitorados." | Caixas de RH e financeiro ficam fora. A política é aprovada pelo RH. |
+| "E se errar?" | Confirmação humana e trecho original sempre visível. O erro de digitação atual também existe. |
+| "Quanto custa?" | Piloto limitado com métrica. Decisão de ampliar só com o ganho medido. |
+
+## 9. Próximos passos propostos
 
 1. Validar as perguntas da seção 7 com o dono do POP e com o fiscal.
 2. Converter o POP em Markdown versionado, separado em arquivos por seção, e corrigir as contradições C1 a C6.
