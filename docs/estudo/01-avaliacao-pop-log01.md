@@ -7,6 +7,10 @@
 
 **Escopo da fase inicial:** apenas a área **operacional**. O fiscal fica fora por enquanto, e os candidatos que dependem de documentos fiscais saem do piloto.
 
+**Objetivo revisado:** reduzir os processos manuais de e-mail e planilha, evitando (a) perda de e-mails, (b) erro de digitação no Excel, (c) perda de deadline de navio enviado pelo armador, inclusive as mudanças durante o processo. A ferramenta principal passa a ser o Claude com o conector **Microsoft 365** (Outlook e Excel), e o Claude Code fica como opção para a automação técnica posterior.
+
+**Pré-requisito:** a conexão do conector Microsoft 365 depende de autorização formal de **TI e RH**, por envolver dados da empresa. Até lá, nenhum conector é conectado e nenhum dado da empresa é lido ou gravado.
+
 Os números de página citados abaixo são os do próprio PDF (`p.X/30`).
 
 ---
