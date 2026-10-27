@@ -14,8 +14,8 @@
 Garantir que toda programação de navio enviada pelo armador (navio, viagem, deadline, gate, mudanças) chegue à planilha de programação sem perda, sem erro de digitação e com registro de cada alteração.
 
 ### Scope
-- **Inclui:** e-mails de programação e de alteração do armador na caixa compartilhada de programação; atualização da planilha de programação (REG LOG 05); aviso a quem depende do deadline.
-- **Exclui:** fiscal (fora da fase inicial); contato por WhatsApp e telefone com motoristas; operação física de contêiner; dados de clientes sob NDA sem autorização.
+- **Inclui:** programação de navios. E-mails de programação e de alteração do armador na caixa compartilhada de programação (navio, viagem, booking, deadline, gate e mudanças); atualização das colunas de navio e embarque na planilha de programação (REG LOG 05); aviso de mudança de deadline à equipe de agendamento de embarque.
+- **Exclui:** caminhões, motoristas, veículos e transportadoras; fiscal (fora da fase inicial); operação física de contêiner; dados de clientes sob NDA sem autorização.
 
 ### RACI Matrix
 | Step | Responsible | Accountable | Consulted | Informed |
@@ -25,7 +25,7 @@ Garantir que toda programação de navio enviada pelo armador (navio, viagem, de
 | 3. Validar remetente e conteúdo | Analista de programação | Responsável pela programação | — | Operação |
 | 4. Confirmar a alteração na planilha | Analista de programação | Responsável pela programação | — | Equipe de agendamento |
 | 5. Gravar na planilha (SharePoint) | Analista de programação | Responsável pela programação | TI | — |
-| 6. Avisar mudança de deadline | Analista de programação | Responsável pela programação | — | Motoristas escalados, agendamento, cliente quando aplicável |
+| 6. Avisar mudança de deadline | Analista de programação | Responsável pela programação | — | Equipe de agendamento de embarque, cliente quando aplicável |
 | 7. Registrar trilha de auditoria | Claude (log) + Analista | TI | DPO | — |
 
 ### Process Flow (to-be)
@@ -79,7 +79,7 @@ E-mail chega na caixa → alguém lê (ou não) → digita na planilha → avisa
 #### Step 6: Avisar mudança de deadline
 - **Who:** Analista de programação
 - **When:** Imediatamente após a gravação de mudança de deadline
-- **How:** Avisar motoristas escalados, agendamento e, quando aplicável, o cliente. Registrar quem foi avisado.
+- **How:** Avisar a equipe de agendamento de embarque e, quando aplicável, o cliente. Registrar quem foi avisado.
 - **Output:** Registro de comunicação
 
 #### Step 7: Trilha de auditoria
@@ -119,7 +119,7 @@ Matriz: probabilidade × impacto → nível. Dono e status em cada linha. Classi
 
 | # | Risco | Categoria | Prob. | Impacto | Nível | Mitigação | Dono | Status |
 |---|-------|-----------|-------|---------|-------|-----------|------|--------|
-| R1 | Vazamento de dados pessoais de motoristas e clientes | Segurança / Compliance | Média | Alto | **High** | Escopo mínimo, CPF mascarado, MFA, log, DPA | TI, DPO | Open |
+| R1 | Vazamento de dados de contatos de armadores e clientes | Segurança / Compliance | Média | Alto | **High** | Escopo mínimo, CPF mascarado, MFA, log, DPA | TI, DPO | Open |
 | R2 | Tratamento sem base legal ou finalidade clara (LGPD) | Compliance | Média | Alto | **High** | Base legal e finalidade escritas, RIPD antes da conexão | DPO, jurídico | Open |
 | R3 | Transferência internacional sem contrato adequado | Compliance | Média | Alto | **High** | DPA e avaliação de transferência | Jurídico | Open |
 | R4 | Injeção de instruções por e-mail | Segurança | Média | Alto | **High** | Conteúdo externo tratado como dado. Leitura separada da gravação. Confirmação humana | TI | Open |
@@ -175,7 +175,7 @@ Ver Parte B. Os riscos de nível High e Critical são tratados antes da conexão
 |----------|---------|---------|--------|
 | TI, RH, DPO | Riscos, controles e critérios de aprovação | Reunião | Semana 1 |
 | Analistas de programação | O que muda no dia a dia e o que não muda | Reunião da equipe | Antes do piloto |
-| Equipe de agendamento e motoristas | Quem avisa mudança de deadline e como | Comunicado | Antes do piloto |
+| Equipe de agendamento de embarque | Quem avisa mudança de deadline e como | Comunicado | Antes do piloto |
 | Armadores | Não haverá mudança no canal. Confirmação por canal conhecido em mudança crítica | E-mail | Antes do piloto |
 
 ### Adoption (assess-plan-execute-sustain)
