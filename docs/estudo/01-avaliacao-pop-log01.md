@@ -5,6 +5,8 @@
 **Elaboração:** Aloisio Alves · **Revisão:** Alef Azevedo, Ana Carolinne Guimarães, Taillyse Guimarães · **Aprovação:** Altemar Campos
 **Páginas:** 30 (leitura integral)
 
+**Escopo da fase inicial:** apenas a área **operacional**. O fiscal fica fora por enquanto, e os candidatos que dependem de documentos fiscais saem do piloto.
+
 Os números de página citados abaixo são os do próprio PDF (`p.X/30`).
 
 ---
@@ -47,7 +49,7 @@ Os números de página citados abaixo são os do próprio PDF (`p.X/30`).
 
 | # | Assunto | O que o texto diz | Onde | Ação sugerida |
 |---|---|---|---|---|
-| C1 | **Rastreador de cavalo** | 5.6: "Tracker" é usada para "frota cavalos e semirreboques" (GPS+RF+jammer). Mas no mesmo item "Sascar" é usada para "veículo Tóliman, cavalo" (GPS+satelital). Em 5.11, o rastreador principal do cavalo é a **Sascar**, e a Isca Tracker fica para **rebocadores e semirreboques**. | p.23–24, p.27 | Confirmar com GR qual tecnologia é a oficial por tipo de veículo e reescrever 5.6 e 5.11 de forma única. |
+| C1 | **Rastreador de cavalo** (**resolvido:** Sascar, confirmado na rodada 1) | 5.6: "Tracker" é usada para "frota cavalos e semirreboques" (GPS+RF+jammer). Mas no mesmo item "Sascar" é usada para "veículo Tóliman, cavalo" (GPS+satelital). Em 5.11, o rastreador principal do cavalo é a **Sascar**, e a Isca Tracker fica para **rebocadores e semirreboques**. | p.23–24, p.27 | Confirmar com GR qual tecnologia é a oficial por tipo de veículo e reescrever 5.6 e 5.11 de forma única. |
 | C2 | **Origem do lacre provisório** | Seção 3: o lacre provisório Tóliman é "fornecido pela transportadora". Em 5.9: a aquisição do lacre provisório e do GIUC é feita pelo **depto. de compras**. | p.4, p.18, p.26 | Definir quem compra, quem fornece e quem recebe. |
 | C3 | **Origem do lacre GIUC** | Seção 3: o GIUC é "fornecido pela transportadora". Em 5.10: o GIUC entra por compras (POP COMP 01) e é recebido no almoxarifado via NF. | p.4, p.26 | Mesma correção de C2. |
 | C4 | **Limiar de falta de sinal** | 5.11: "falta de sinal por mais de 1 hora" aciona a gerenciadora. Em 5.7 (Situação 1): "parado ou com ignição desligada por 30 minutos" já aciona a logística. | p.25, p.27 | Não é necessariamente erro (são gatilhos diferentes), mas precisa estar explícito e cruzado. |
@@ -76,12 +78,12 @@ Os candidatos abaixo estão ordenados por **valor × viabilidade**, supondo que 
 | Prioridade | Candidato | Seção do POP | Hoje | Como o Claude Code ajudaria | Pré-requisito |
 |---|---|---|---|---|---|
 | 1 | **Versionar o POP em Markdown** neste repositório, com glossário e referências cruzadas, e rodar uma checagem de consistência (termos, notas, referências a POPs). | Todo o POP | PDF de Word, sem histórico de diff | Converter, corrigir o item 4, detectar termo sem definição e referência quebrada. Serve de base para as demais automações. | Dono do POP aprovar a versão em Markdown como fonte. |
-| 2 | **Validador NF-e × Ordem de Carregamento** (conferência fiscal). | 5.1, 5.2 a/b, 5.3, 5.5.2 | Conferência manual dos dados entre NF-e e OC | Ler o XML da NF-e, comparar com a OC e listar divergências antes da emissão de CT-e/MDF-e. | Acesso ao XML e aprovação do fiscal sobre as regras. |
+| — | *Fora do escopo inicial (fiscal).* **Validador NF-e × Ordem de Carregamento** (conferência fiscal). | 5.1, 5.2 a/b, 5.3, 5.5.2 | Conferência manual dos dados entre NF-e e OC | Ler o XML da NF-e, comparar com a OC e listar divergências antes da emissão de CT-e/MDF-e. | Acesso ao XML e aprovação do fiscal sobre as regras. |
 | 3 | **Conciliação de lacres** (inventário, entregas, devoluções, não conformidades). | 5.10, REG LOG 07 | Registro no app FRI e formulário | Cruzar os registros de lacres com as entregas e sinalizar divergências e lacres sem baixa. | Exportação dos módulos Lacres do FRI. |
 | 4 | **Alerta de rastreador a cada 30 dias.** | 5.11 | GR consulta o portal Raster à mão e agenda com 8 dias de antecedência | Gerar lista de veículos com check-list vencendo e o aviso de 8 dias. | Exportação do portal Raster. |
 | 5 | **Relatório de programação** (REG LOG 05) a partir das exportações Rodopar e MBM. | 5.1, 5.3, 5.5 | Planilha alimentada à mão e compartilhada no Teams | Montar a planilha e o resumo diário a partir das exportações. | Acesso às exportações Rodopar/MBM. |
 | 6 | **Monitor de prazo de chegada ao terminal.** | 5.5.1 (tabela, Nota 3), 5.7 | Equipe de monitoramento acompanha por alerta | Cruzar ETA, data de saída e prazo de chegada por terminal e sinalizar risco. | Integração com dados de posição (Raster/Sascar). Não é trivial. |
-| 7 | **Inventário e rotina de retenção documental.** | 6 | Vários prazos "indeterminado" | Gerar a lista de registros, seus prazos e os vencidos para descarte aprovado. | Política de retenção aprovada pelo jurídico/fiscal. |
+| 7 | **Inventário e rotina de retenção documental** (somente registros operacionais). | 6 | Vários prazos "indeterminado" | Gerar a lista de registros operacionais, seus prazos e os vencidos para descarte aprovado. | Política de retenção dos registros operacionais aprovada pelo responsável da operação. Os registros fiscais ficam fora desta fase. |
 | 8 | **Assistente de dúvidas sobre o POP** (para novos colaboradores). | Todo o POP | Perguntas ao gestor | Responder com base no POP versionado, citando o item. | Passo 1 concluído. Atenção ao item 6 (dados sensíveis). |
 
 **Fora do escopo do Claude Code** (melhor atendidos por outras ferramentas da linha Claude ou por processo): o atendimento por WhatsApp e telefone com motoristas e clientes, a conferência física de lacres e contêineres, e a operação de agendamento no site dos terminais. Para esses casos, a alternativa é uma ferramenta de chat para o time de operação.
@@ -119,5 +121,5 @@ Estas perguntas dependem de decisão ou conhecimento de quem opera o processo, n
 
 1. Validar as perguntas da seção 7 com o dono do POP e com o fiscal.
 2. Converter o POP em Markdown versionado, separado em arquivos por seção, e corrigir as contradições C1 a C6.
-3. Definir o primeiro piloto (sugestão: caso 2, validador NF-e × Ordem de Carregamento, por ser de alto valor e escopo fechado).
+3. Definir o primeiro piloto dentro da área operacional (sugestão: caso 4, alerta do check-list do rastreador a cada 30 dias, por ter regra clara e dados de uma única fonte; alternativa: caso 3, conciliação de lacres).
 4. Medir ganho e erro do piloto antes de ampliar para os demais candidatos.
